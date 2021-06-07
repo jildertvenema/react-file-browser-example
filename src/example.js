@@ -4,11 +4,13 @@ import FileBrowser from "react-file-browser-component";
 
 const fileApi = "http://localhost:3001/";
 
+const initalDirectory = "/";
+
 const ExampleFileBrowser = () => {
     const [currentFiles, setCurrentFiles] = useState([]);
-    const [currentDirectory, setCurrentDirectory] = useState("/");
+    const [currentDirectory, setCurrentDirectory] = useState(initalDirectory);
 
-    const [history, setHistory] = useState(["/"]);
+    const [history, setHistory] = useState([initalDirectory]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const [locations, setLocations] = useState([]);
@@ -36,7 +38,13 @@ const ExampleFileBrowser = () => {
 
     const changeDirectory = (newDirectory) => {
         setCurrentDirectory(newDirectory);
+
+        if (currentIndex > 0) {
+            setHistory(() => [newDirectory, initalDirectory]);
+        } else {
+
         setHistory(prev => [newDirectory, ...prev]);
+        }
         setCurrentIndex(0);
     };
 
@@ -49,6 +57,8 @@ const ExampleFileBrowser = () => {
         setCurrentDirectory(history[currentIndex - 1]);
         setCurrentIndex(currentIndex - 1);
     };
+
+    console.log({currentIndex, history});
 
     return <FileBrowser
         currentDirectory={currentDirectory}
