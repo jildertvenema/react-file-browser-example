@@ -38,13 +38,7 @@ const ExampleFileBrowser = () => {
 
     const changeDirectory = (newDirectory) => {
         setCurrentDirectory(newDirectory);
-
-        if (currentIndex > 0) {
-            setHistory(() => [newDirectory, initalDirectory]);
-        } else {
-
-        setHistory(prev => [newDirectory, ...prev]);
-        }
+        setHistory((prev) => [newDirectory, ...prev.slice(currentIndex)]);
         setCurrentIndex(0);
     };
 
@@ -57,7 +51,7 @@ const ExampleFileBrowser = () => {
         setCurrentDirectory(history[currentIndex - 1]);
         setCurrentIndex(currentIndex - 1);
     };
-    
+
     return <FileBrowser
         currentDirectory={currentDirectory}
         currentFiles={currentFiles}
