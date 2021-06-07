@@ -23,6 +23,8 @@ A reusable react component for browsing files in the web browser.
 <br />
 
 # API
+Check src/example.js for the example usage of this component.
+<br />
 ## Properties
 | Name | Type | Description | Example |
 |-|-|-|-|
