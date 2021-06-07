@@ -1,4 +1,4 @@
-# A React File Browser Component
+# A example project for the React File Browser Component
 A reusable react component for browsing files in the web browser. 
 
 <p align="center">

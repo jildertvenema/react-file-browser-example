@@ -9270,6 +9270,15 @@ react-error-overlay@^6.0.9:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
 
+react-file-browser-component@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-file-browser-component/-/react-file-browser-component-1.0.0.tgz#ba16373bd5c4ae7697eb7ab0e805b962e142d14d"
+  integrity sha512-kkPEuuY+RKwclDe9izPySTya44B1PRESJB8GYs9bi8AG+vyce4ocr3mJVlZ36Dzt/uZeIPbfCvv/pm6XAD+Vcw==
+  dependencies:
+    "@material-ui/core" "^4.11.4"
+    "@material-ui/icons" "^4.11.2"
+    styled-components "^5.3.0"
+
 react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"

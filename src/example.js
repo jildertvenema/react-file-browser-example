@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import FileBrowser from "./file-browser";
-
+import FileBrowser from "react-file-browser-component";
 
 const fileApi = "http://localhost:3001/";
 
