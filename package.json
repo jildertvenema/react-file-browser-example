@@ -16,7 +16,9 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start && node node-backend-app/index",
+    "start": "concurrently --kill-others \"npm run frontend\" \"npm run backend\"",
+    "backend": "node backend/index",
+    "frontend": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
