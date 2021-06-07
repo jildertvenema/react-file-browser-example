@@ -75,9 +75,7 @@ const FileList = ({ files, onFileClick }) => {
 };
 
 FileList.propTypes = {
-  files: PropTypes.arrayOf(PropTypes.shape({
-    map: PropTypes.func
-  })),
+  files: PropTypes.array,
   onFileClick: PropTypes.func
 };
 
