@@ -59,7 +59,7 @@ const ExampleFileBrowser = () => {
         onLocationClick={location => changeDirectory("/Volumes/" + location.drive)}
         onNextClick={onNextClick}
         onPreviousClick={onPreviousClick}
-        previousEnabled={currentIndex > 0 && history.length > 0}
+        previousEnabled={history.length > currentIndex + 1}
     />;
 };
 
