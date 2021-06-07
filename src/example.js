@@ -57,9 +57,7 @@ const ExampleFileBrowser = () => {
         setCurrentDirectory(history[currentIndex - 1]);
         setCurrentIndex(currentIndex - 1);
     };
-
-    console.log({currentIndex, history});
-
+    
     return <FileBrowser
         currentDirectory={currentDirectory}
         currentFiles={currentFiles}
