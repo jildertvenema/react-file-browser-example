@@ -17,7 +17,12 @@ app.get("/os", (req, res) => {
 });
 
 app.get("/ls/:dir", (req, res) => {
-    const directory = req.params.dir;
+    let directory = req.params.dir;
+
+    if (DARWIN) {
+        directory = '/Volumes/' + directory
+    }
+
     res.send(getFileInfoFromFolder(directory));
 });
 
@@ -26,12 +31,21 @@ app.get("/ls", (req, res) => {
 });
 
 app.get("/locations", async (req, res) => {
-    let drives = await drivelist.list();
-
-    res.send(drives.map(drive => ({
-        label: drive.description,
-        drive: DARWIN ? '/Volumes/' + drive.device.replace('/dev/', '') : drive.mountpoints[0].path
-    })));
+    // MAC OS
+    if (DARWIN) {
+        const locations = fs.readdirSync("/Volumes", "utf8");
+        res.send(locations.map(location => ({
+            label: location,
+            drive: location
+        })));
+    } else {
+        // WINDOWS
+        let drives = await drivelist.list();
+        res.send(drives.map(drive => ({
+            label: drive.description,
+            drive: drive.mountpoints[0].path
+        })));
+    }
 });
 
 app.listen(port, () => {

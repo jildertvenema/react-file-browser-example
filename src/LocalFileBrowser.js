@@ -6,6 +6,12 @@ const fileApi = "http://localhost:3001/";
 
 const initalDirectory = "/";
 
+function pathJoin(parts, sep){
+    var separator = sep || "/";
+    var replace   = new RegExp(separator+"{1,}", "g");
+    return parts.join(separator).replace(replace, separator);
+ }
+
 const ExampleFileBrowser = () => {
     const [currentFiles, setCurrentFiles] = useState([]);
     const [currentDirectory, setCurrentDirectory] = useState(initalDirectory);
@@ -24,6 +30,7 @@ const ExampleFileBrowser = () => {
 
     useEffect(() => {
         fetch(fileApi + "locations").then(res => res.json().then(jsonRes => {
+            console.log({ jsonRes });
             setLocations(jsonRes);
         }));
     }, []);
@@ -31,7 +38,7 @@ const ExampleFileBrowser = () => {
 
     const onFileClick = (file) => {
         if (file.isFolder) {
-            const nextDirectory = currentDirectory + file.name + "/";
+            const nextDirectory = pathJoin([currentDirectory, file.name]) + "/";
             changeDirectory(nextDirectory);
         } else {
             console.log("file click", file);

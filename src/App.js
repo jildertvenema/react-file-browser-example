@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import styled from "styled-components";
-import ExampleFileBrowser from "./example";
+import LocalFileBrowser from "./LocalFileBrowser";
 
 const Container = styled.div`
   width: 1280px;
@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
       <Container>
-        <ExampleFileBrowser />
+        <LocalFileBrowser />
       </Container>
     </div>
   );
