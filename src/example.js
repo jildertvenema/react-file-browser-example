@@ -24,7 +24,7 @@ const ExampleFileBrowser = () => {
 
     useEffect(() => {
         fetch(fileApi + "locations").then(res => res.json().then(jsonRes => {
-            setLocations(jsonRes.map(location => ({ label: location, drive: location })));
+            setLocations(jsonRes);
         }));
     }, []);
 
@@ -58,7 +58,7 @@ const ExampleFileBrowser = () => {
         locations={locations}
         nextEnabled={currentIndex > 0 && history.length > 0}
         onFileClick={onFileClick}
-        onLocationClick={location => changeDirectory("/Volumes/" + location.drive)}
+        onLocationClick={location => changeDirectory(location.drive)}
         onNextClick={onNextClick}
         onPreviousClick={onPreviousClick}
         previousEnabled={history.length > currentIndex + 1}
