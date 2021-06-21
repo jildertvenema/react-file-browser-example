@@ -10,6 +10,9 @@ const DARWIN = process.platform === 'darwin'
 
 const app = express();
 const port = 3001;
+
+app.use(express.json());
+
 app.use(cors());
 
 app.get("/os", (req, res) => {
@@ -24,6 +27,27 @@ app.get("/ls/:dir", (req, res) => {
     }
 
     res.send(getFileInfoFromFolder(directory));
+});
+
+app.post("/update/:dir", (req, res) => {
+    let directory = req.params.dir;
+    const content = req.body.content;
+
+    if (DARWIN) {
+        directory = '/Volumes/' + directory
+    }
+    fs.writeFileSync(directory, content);
+    res.send(content);
+});
+
+app.get("/read/:dir", (req, res) => {
+    let directory = req.params.dir;
+
+    if (DARWIN) {
+        directory = '/Volumes/' + directory
+    }
+    const content = fs.readFileSync(directory);
+    res.send(content);
 });
 
 app.get("/ls", (req, res) => {

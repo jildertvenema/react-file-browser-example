@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import FileBrowser from "react-file-browser-component";
+import FileEditor from "./FileEditor";
 
 const fileApi = "http://localhost:3001/";
 
@@ -12,6 +13,17 @@ function pathJoin(parts, sep){
     return parts.join(separator).replace(replace, separator);
  }
 
+ const fetchPost = async (url, body) => {
+    return await fetch(url, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      });
+ };
+
 const ExampleFileBrowser = () => {
     const [currentFiles, setCurrentFiles] = useState([]);
     const [currentDirectory, setCurrentDirectory] = useState(initalDirectory);
@@ -20,6 +32,8 @@ const ExampleFileBrowser = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const [locations, setLocations] = useState([]);
+    const [selectedFile, setSeletedFile] = useState();
+    const [fileContent, setFileContent] = useState(false);
 
     useEffect(() => {
         fetch(fileApi + "ls/" + encodeURIComponent(currentDirectory)).then(res => 
@@ -30,7 +44,6 @@ const ExampleFileBrowser = () => {
 
     useEffect(() => {
         fetch(fileApi + "locations").then(res => res.json().then(jsonRes => {
-            console.log({ jsonRes });
             setLocations(jsonRes);
         }));
     }, []);
@@ -41,7 +54,8 @@ const ExampleFileBrowser = () => {
             const nextDirectory = pathJoin([currentDirectory, file.name]) + "/";
             changeDirectory(nextDirectory);
         } else {
-            console.log("file click", file);
+            setSeletedFile(file);
+            getFileContent(file);
         }
     };
 
@@ -49,6 +63,22 @@ const ExampleFileBrowser = () => {
         setCurrentDirectory(newDirectory);
         setHistory((prev) => [newDirectory, ...prev.slice(currentIndex)]);
         setCurrentIndex(0);
+    };
+
+    const getFileContent = (file) => {
+        const filePath = pathJoin([currentDirectory, file.name]);
+        try {
+            fetch(fileApi + "read/" + encodeURIComponent(filePath)).then(res => {
+                if (!res.ok) {
+                    setFileContent("");
+                }
+                res.text().then(content => {
+                    setFileContent(content);
+                });
+            });
+        }  catch{
+            setFileContent("");
+        }
     };
 
     const onPreviousClick = () => {
@@ -60,6 +90,34 @@ const ExampleFileBrowser = () => {
         setCurrentDirectory(history[currentIndex - 1]);
         setCurrentIndex(currentIndex - 1);
     };
+
+    const saveContent = async (file, content) => {
+        const filePath = pathJoin([currentDirectory, file.name]);
+        await fetchPost(fileApi + "update/" + encodeURIComponent(filePath), { content });
+    };
+
+    if (selectedFile) {
+        if (fileContent === false) {
+            return "Opening File..";
+        } else if (fileContent === "") {
+            alert("File is empty or not readable");
+            setSeletedFile("");
+            setFileContent(false);
+            return null;
+        }
+        return <FileEditor
+            fileName={selectedFile.name}
+            content={fileContent}
+            onExit={() => {
+                setSeletedFile("");
+                setFileContent(false);
+            }}
+            onSave={(content) => {
+                setFileContent(content);
+                saveContent(selectedFile, content);
+            }}
+        />;
+    }
 
     return <FileBrowser
         currentDirectory={currentDirectory}
