@@ -18,7 +18,6 @@ app.get("/os", (req, res) => {
 
 app.get("/ls/:dir", (req, res) => {
     const directory = req.params.dir;
-    console.log({directory});
     res.send(getFileInfoFromFolder(directory));
 });
 
@@ -61,7 +60,7 @@ const getFileInfoFromFolder = (route) => {
             try {
                 stats = fs.statSync(filePath);
             } catch {
-                console.log('error')
+                console.log('error getting file info for file: ' + file)
             }
             
             const fileSizeInBytes = stats.size;
