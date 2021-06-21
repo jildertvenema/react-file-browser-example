@@ -18,7 +18,7 @@ const ExampleFileBrowser = () => {
     useEffect(() => {
         fetch(fileApi + "ls/" + encodeURIComponent(currentDirectory)).then(res => 
             res.json().then(jsonRes => {
-                setCurrentFiles(() => jsonRes.map(file => ({ ...file, kind: file.isFolder ? "Folder" : "Document", size: file.size || file.fileSizeInBytes })));
+                setCurrentFiles(() => jsonRes.map(file => ({ ...file, kind: file.isFolder ?  "Folder" : "Document", size: file.size || file.fileSizeInBytes })));
             }));
     }, [currentDirectory]);
 
