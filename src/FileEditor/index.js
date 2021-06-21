@@ -27,7 +27,7 @@ const FileEditor = ({ fileName, content, onExit, onSave }) => {
     };
 
     const onSaveExit = () => {
-        onSave();
+        onSave(pendingChanges);
         onExit();
     };
 
